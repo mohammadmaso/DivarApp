@@ -1,0 +1,255 @@
+      {% load static %}
+      {% load mapbox_location_field_tags %}
+{% location_field_includes %}
+{% include_jquery %}
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+    <!-- Generated: 2019-04-04 16:55:45 +0200 -->
+    <title>دیوار | نیازمندی ها</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+
+    <!-- Dashboard Core -->
+    <title>دیوار | نیازمندی ها</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+        <script src="{% static 'assets/js/core.js' %}"></script>
+
+
+
+
+
+    <!-- Dashboard Core -->
+    <link href="{% static 'assets/css/dashboard.rtl.css' %}" rel="stylesheet" />
+
+  </head>
+  <body class="">
+    <div class="page">
+      <div class="flex-fill">
+        <div class="header py-4">
+          <div class="container">
+            <div class="d-flex">
+              <a class="header-brand" href="./index.html">
+               دیوار | نیازمندی های آنلاین
+              </a>
+              <div class="d-flex">
+                <select name="beast" id="select-beast" class="form-control custom-select">
+                  <option value="1">انتخاب شهر</option>
+                  <option value="2">تهران</option>
+                  <option value="4">یزد</option>
+                  <option value="3">غیره</option>
+                </select>
+            </div>
+              <div class="d-flex order-lg-2 ml-auto">
+                <div class="nav-item d-none d-md-flex">
+                  <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary" target="_blank">ثبت رایگان آگهی</a>
+                </div>
+                <div class="dropdown d-none d-md-flex">
+                  <a class="nav-link icon" data-toggle="dropdown">
+                    <i class="fe fe-bell"></i>
+                    <span class="nav-unread"></span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a href="#" class="dropdown-item d-flex">
+                      <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/male/41.jpg)"></span>
+                      <div>
+                        <strong>سارا</strong> سلام
+                        <div class="small text-muted">10 دقیقه پیش</div>
+                      </div>
+                    </a>
+                    <a href="#" class="dropdown-item d-flex">
+                      <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/female/1.jpg)"></span>
+                      <div>
+                        <strong>علی رستمی</strong> سلام قیمت بهمان چند؟
+                        <div class="small text-muted">1 ساعت پیش</div>
+                      </div>
+                    </a>
+                    <a href="#" class="dropdown-item d-flex">
+                      <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/female/18.jpg)"></span>
+                      <div>
+                        <strong>محمد همتی</strong> سلام قیمت فلان چند؟
+                        <div class="small text-muted">2 روز پیش</div>
+                      </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-center">نشان به عنوان خوانده شده</a>
+                  </div>
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="dropdown">
+                  <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                    <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                    <span class="ml-2 d-none d-lg-block">
+                      <span class="text-default">{{user.first_name}} {{user.last_name}}</span>
+                      <small class="text-muted d-block mt-1">کاربر معمولی</small>
+                    </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-user"></i> آگهی های من
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="dropdown-icon fe fe-settings"></i> نشان شده
+                    </a>
+
+                    <a class="dropdown-item" href="{% url 'logout' %}">
+                      <i class="dropdown-icon fe fe-log-out"></i> خروج
+                    </a>
+                  </div>
+                </div>
+                    {% else %}
+                    <div class="nav-item d-none d-md-flex">
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-primary" target="_self">ثبت‌نام/ورود</a>
+                    </div>
+                {% endif %}
+
+              </div>
+              <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                <span class="header-toggler-icon"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-3 ml-auto">
+                <form class="input-icon my-3 my-lg-0">
+                  <input type="search" class="form-control header-search" placeholder="جستجو میون کلی آگهی&hellip;" tabindex="1">
+                  <div class="input-icon-addon">
+                    <i class="fe fe-search"></i>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <a href="./index.html" class="nav-link"><i class="fe fe-home"></i> صفحه اصلی</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-user"></i> دیوار من</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link"><i class="fe fe-eye"></i> درباره ما</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a href="./form-elements.html" class="nav-link"><i class="fe fe-edit"></i> بلاگ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="./gallery.html" class="nav-link"><i class="fe fe-clipboard"></i> قوانین</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="./docs/index.html" class="nav-link"><i class="fe fe-phone"></i> تماس با ما</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="my-3 my-md-5">
+        <div class="container">
+
+
+          <div class="col-12">
+            {% if user.is_authenticated %}
+                <form method="post" class="card" enctype="multipart/form-data">
+                      <div class="card-header">
+                        <h3 class="card-title">ثبت آگهی خودرو</h3>
+                      </div>
+                      <div class="card-body">
+                           {% csrf_token %}
+                            {{ form.as_p }}
+                    <button type="submit"  class="btn btn-primary btn-block">تایید قوانین و ثبت</button>
+
+                      </div>
+                </form>
+                    {{ form.media }}
+                    {% else %}
+                    <div class="card-body">
+                        <h4> برای ثبت اگهی باید حساب کاربری داشته باشی یا به حسابت وارد شی 🤗 </h4>
+                        <br>
+                        <a href="{% url 'login' %}" class="btn btn-block btn-primary" target="_self">ثبت‌نام/ورود</a>
+                    </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+     <div class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="row">
+                <div class="col-6 col-md-3">
+                 <img src="{% static 'logo.png'%}" alt="" srcset="">
+                </div>
+                <div class="col-6 col-md-3">
+                  <img src="{% static 'logo (1).png'%}" alt="" srcset="" sizes="80">
+                </div>
+                <div class="col-6 col-md-3">
+                  <img src="{% static 'ecunion-logo.9481985.png'%}" alt="" srcset="">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0 " style="float:left !important;">
+              <p style="float:left !important;">
+دیوار! پایگاه خرید و فروش بی‌واسطه‌
+
+اگه دنبال چیزی هستی، شهرت رو انتخاب کن و تو دسته‌بندی‌ها به دنبالش بگرد.
+
+اگر هم می‌خوای چیزی بفروشی، چند تا عکس خوب ازش بگیر و آگهیت رو بچسبون به دیوار.
+
+علاوه بر وبسایت، می‌تونی از دیوار روی دستگاه‌های اندرویدی، آیفون و آیپد هم استفاده کنی.
+
+با دیوار با خیال راحت بخر و. بفروش
+           </p>
+          </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container">
+          <div class="row align-items-center flex-row-reverse">
+            <div class="col-auto ml-lg-auto">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <ul class="list-inline list-inline-dots mb-0">
+                    <li class="list-inline-item"><a href="./docs/index.html">تماس با ما</a></li>
+                    <li class="list-inline-item"><a href="./faq.html">پرسش و پاسخ</a></li>
+                  </ul>
+                </div>
+                <div class="col-auto">
+                  <a href="https://github.com/tabler/tabler" class="btn btn-outline-primary btn-sm">ثبت آگهی</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+              Copyright © 2020 <a href=".">Mohammad Maso / Reza Lotfi</a> All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
