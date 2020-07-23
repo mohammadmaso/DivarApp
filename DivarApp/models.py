@@ -27,7 +27,7 @@ class Announcement(models.Model):
     detail = models.TextField(blank=True, verbose_name='توضیحات')
     is_chatActive = models.BooleanField(default=True, verbose_name='آیا چت فعال باشد؟')
     phone_number = models.CharField(max_length=12, verbose_name='شماره تلفن')
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ارسال اگهی')
     image = models.ImageField(upload_to ='uploads/',null=True, blank=True, verbose_name='تصویر')
     zone = models.CharField(max_length=20 ,choices=TEHRAN_ZONES, default='OTHER', verbose_name='منطقه')
     city = models.CharField(max_length=20 ,choices=CITY, default='tehran', verbose_name='شهر')

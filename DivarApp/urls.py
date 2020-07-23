@@ -1,4 +1,6 @@
 from django.urls import path,include
+from django.conf.urls import url
+
 
 from . import views
 
@@ -9,6 +11,6 @@ urlpatterns = [
     path(r'^signup/$', views.signup, name='signup'),
     path('import/', views.carCreate, name='import'),
     path('detail/<int:id>', views.detailView, name='detail'),
-    path(r'^search/$', views.search, name='search'),
-
+    url(r'^search/$', views.search, name='search'),
+    path('myAnnouncment/', views.my , name = 'my'),
 ]

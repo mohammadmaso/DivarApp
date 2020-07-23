@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views import generic
-from .filters import UserFilter
+from .filters import CarFilter
 
 
 
@@ -61,4 +61,10 @@ def search(request):
     car_list = Car.objects.all()
     car_filter = CarFilter(request.GET, queryset=car_list)
     return render(request, 'search.html', {'filter': car_filter})
-
+def my(request):
+    if request.user.is_authenticated:
+        latest_car = Car.objects.filter(author = request.user.id)
+        context = {'latest': latest_car }
+        return render(request, 'published.html', context)
+    else:
+        return HttpResponse("not user")

@@ -101,7 +101,7 @@
                     </span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{% url 'my' %}">
                       <i class="dropdown-icon fe fe-user"></i> آگهی های من
                     </a>
                     <a class="dropdown-item" href="#">
@@ -168,16 +168,23 @@
         <div class="container">
           <div class="page-header">
             <h1 class="page-title">
-              <i class="fe fe-list"></i>
-              آخرین اقلام
+              <i class="fe fe-filter"></i>
+              اگهی‌های فیلتر شده
             </h1>
             <br>
 
           </div>
+          <button class="btn btn-primary mb-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            گزینه‌های فیلتر
+        </button>
+        <div class="collapse" id="collapseExample">
+  <div class="card card-body mb-2">
             <form method="get">
                 {{ filter.form.as_p }}
-                <button type="submit">فیلتر کردن</button>
+                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
             </form>
+            </div>
+</div>
           <div class="row">
             <div class="col-lg-3 order-lg-1 mb-4">
               <div class="card">
@@ -221,11 +228,10 @@
             <div class="col">
 
 
-{% if car or latest %}
 
                   <div class="row row-cards row-deck">
-
-            {% for car in latest %}
+{% if filter.qs%}
+            {% for car in filter.qs %}
                     <div class="col-sm-6 col-xl-6">
                       <div class="card">
                             {% if car.image %}

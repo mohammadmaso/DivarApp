@@ -2,9 +2,10 @@ from .models import Property, Car, ApartmantBuy
 import django_filters
 
 
-class UserFilter(django_filters.FilterSet):
-    first_name = django_filters.CharFilter(lookup_expr='icontains')
-    year_joined = django_filters.NumberFilter(name='date_joined', lookup_expr='year')
+class CarFilter(django_filters.FilterSet):
+    price = django_filters.RangeFilter()
+
+
     class Meta:
         model = Car
-        fields = ['first_name']
+        fields = ['sell_choice', 'price', 'is_exchange', 'function' , 'is_immediate' ,'zone', 'pub_date', ]

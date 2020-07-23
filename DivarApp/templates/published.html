@@ -29,8 +29,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
         <script src="{% static 'assets/js/core.js' %}"></script>
 
 
@@ -47,10 +45,10 @@
         <div class="header py-4">
           <div class="container">
             <div class="d-flex">
-              <a class="header-brand" href="./index.html">
+              <a class="header-brand" href="{% url 'property'%}">
                دیوار | نیازمندی های آنلاین
               </a>
-              <div class="d-flex">
+              <div class="d-none d-sm-block">
                 <select name="beast" id="select-beast" class="form-control custom-select">
                   <option value="1">انتخاب شهر</option>
                   <option value="2">تهران</option>
@@ -103,7 +101,7 @@
                     </span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item" href="{% url 'my' %}">
+                    <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-user"></i> آگهی های من
                     </a>
                     <a class="dropdown-item" href="#">
@@ -116,8 +114,8 @@
                   </div>
                 </div>
                     {% else %}
-                    <div class="nav-item d-none d-md-flex">
-                    <a href="{% url 'login' %}" class="btn btn-sm btn-primary" target="_self">ثبت‌نام/ورود</a>
+                    <div class="nav-item d-none d-flex">
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-primary" target="_self"><i class="fe fe-log-in"></i> ورود</a>
                     </div>
                 {% endif %}
 
@@ -166,83 +164,70 @@
           </div>
         </div>
       </div>
-
-
-
-
       <div class="my-3 my-md-5">
-          <div class="container">
-            <nav aria-label="breadcrumb ">
+        <div class="container">
+          <div class="page-header">
+            <h1 class="page-title">
+              <i class="fe fe-list"></i>
+              اگهی‌های شما
+            </h1>
+            <br>
 
-                <ol class="breadcrumb">
-                <a href="{% url 'car' %}"><i class="fe fe-arrow-right">   </i></a>
-                <li class="breadcrumb-item active" aria-current="page">خانه</li>
-                <li class="breadcrumb-item active" aria-current="page">آگهی خودرو</li>
-                </ol>
+          </div>
 
-            </nav>
-            <div class="row mt-2">
-              <div class="col-lg-6 col-sm-12 ">
+          <div class="row">
 
-                   <h3>{{data.subject}}</h3>
-                   <span>{{ data.whenpublished}}</span>
-                   <hr>
-                   <p>محل: {{ data.get_zone_display}}</p>
-                   <hr>
-                   <p>شماره تلفن: {{ data.phone_number}}</p>
-                   <hr>
-                   <p>نوع فروش: {{ data.get_sell_choice_display}}</p>
-                   <hr>
-                   <p>سال ساخت: 13{{ data.prod_year}}</p>
-                   <hr>
-                   <p>کارکرد: {{ data.function}} کیلومتر</p>
-                   <hr>
-                   <p>قیمت: {{ data.price}} ریال</p>
-                    <hr>
-                   <p>توضیحات: </p>
-                   <p>{{ data.detail}}</p>
-              </div>
-              <div class="col-lg-6 col-sm-12 ">
-                   {% if data.image %}
-                        <img class="card-img-top mb-5" src="{{data.image.url}}" alt="abc"></a>
+
+{% if latest %}
+
+                  <div class="row row-cards row-deck">
+
+            {% for car in latest %}
+                    <div class="col-sm-3 col-xl-3">
+                      <div class="card">
+                            {% if car.image %}
+                        <a href="{% url 'detail' car.id %}"><img class="card-img-top" src="{{car.image.url}}" alt="abc"></a>
                             {% else %}
-                        <img class="card-img-top mb-5" style="opacity: 0.3;" src="{% static 'nf.png'%}" alt="abc"></a>
+                        <a href="{% url 'detail' car.id %}"><img class="card-img-top" style="opacity:0.4" src="{% static 'unnamed.png'%}" alt="abc"></a>
                             {% endif %}
-                {% if data.location %}
-                <div class="mb-2" id='map' style='width: 100%; height: 300px;'></div>
-                <script>
-                mapboxgl.accessToken = 'pk.eyJ1IjoibW9oYW1tYWRtYXNvIiwiYSI6ImNrYmFqdzNkMTA2aWYyb21kc3dhMGViOGIifQ.Q13x0P1f25Zv1GeKcSV5lA';
-                var map = new mapboxgl.Map({
-                container: 'map',
-                center: [{{data.location}}],
-                 zoom: 9,
-                style: 'mapbox://styles/mapbox/streets-v11'
-                });
-                </script>
+
+
+                        <div class="card-body d-flex flex-column">
+                          <h4><a href="{% url 'detail' car.id %}">{{car.subject}}</a></h4>
+                          <div class="text-muted">{{car.detail}}</div>
+                          <div class="d-flex align-items-center pt-5 mt-auto">
+                            <div>
+                            {% if car.price > 0 %}
+                              <strong><span>قیمت: </span><span>{{car.price}}</span><span> تومان </span></strong>
+                            {% elif car.price == 0 %}
+                                <strong>رایگان</strong>
+                            {% elif car.price == -1.000 %}
+                                <strong>توافقی</strong>
+                            {% endif %}
+
+                              <small class="d-block text-muted"><span>{{car.whenpublished}}</span></small>
+                            </div>
+                            <div class="ml-auto text-muted">
+                              <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            {% endfor %}
+
+
+
+
+                </div>
                 {% else %}
-                    <div class="mb-2" id='map' style='width: 100%; height: 300px;'></div>
-                    <script>
-                    mapboxgl.accessToken = 'pk.eyJ1IjoibW9oYW1tYWRtYXNvIiwiYSI6ImNrYmFqdzNkMTA2aWYyb21kc3dhMGViOGIifQ.Q13x0P1f25Zv1GeKcSV5lA';
-                    var map = new mapboxgl.Map({
-                    container: 'map',
-
-                    style: 'mapbox://styles/mapbox/streets-v10',
-                    center: [51.3890,35.6892],
-                    zoom : 9,
-                    });
-                    </script>
-                {% endif%}
-                <fieldset class="form-fieldset">
-
-                          <label class="form-label"><i class="fe fe-share-2"></i> به اشتراک گذاری <a href="{% url 'detail' data.id %}"><i class="fe fe-copy"></i></a></label>
-
-
-                </fieldset>
-                <button class="btn btn-danger btn-block" type="button">گزارش ایراد اگهی</button>
+                 <p>نتیجه‌ای یافت نشد!</p>
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
+      </div>
      <div class="footer">
         <div class="container">
           <div class="row">
@@ -293,7 +278,7 @@
               </div>
             </div>
             <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-              Copyright © 2020 <a href=".">Mohammad Maso / Reza Lotfi</a> All rights reserved.
+              Copyright © 2020 <a href="mohammadmaso.ir">Mohammad Maso / Reza Lotfi</a> All rights reserved.
             </div>
           </div>
         </div>

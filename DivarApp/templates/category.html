@@ -174,16 +174,13 @@
             <br>
 
           </div>
-            <form method="get">
-                {{ filter.form.as_p }}
-                <button type="submit">فیلتر کردن</button>
-            </form>
+
           <div class="row">
             <div class="col-lg-3 order-lg-1 mb-4">
               <div class="card">
                 <div class="card-body">
-              <a href="{% url 'import'%}" class="btn btn-block btn-primary mb-6">
-                <i class="fe fe-copy mr-2"></i>ثبت آگهی
+              <a href="{% url 'search'%}" class="btn btn-block btn-primary mb-6">
+                <i class="fe fe-filter mr-2"></i>فیلتر کردن
               </a>
               <!-- Getting started -->
               <div class="list-group list-group-transparent mb-0">
