@@ -1,11 +1,3 @@
-## ویدیو توضیحات :‌
-https://www.aparat.com/v/VFNq8
-
-## درصد فعالیت اعضای گروه:
-نام  | درصد|
-|--|--|
-| محمد مسعودی همت آبادی 9527393|50٪  |
-| رضا لطفی 9526983 |50 ٪  |
-
-## آدرس سایت
+Simple site like Divar.ir using Django framwork.
+## Web Page
 http://mohammadmaso.pythonanywhere.com/DivarApp
